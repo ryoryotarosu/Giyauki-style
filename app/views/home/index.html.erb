@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ギヤウキ風名前メーカー</title>
+</head>
+<body>
+<div class="title">
+  <h1>ギヤウキ風名前メーカー</h1>
+</div>
+
+  <form>
+    <label for="kanji" class="myouji">苗字:</label>
+    <input type="text" id="kanji" name="kanji" value="<%= @kanji %>" readonly><br><br>
+
+    <label for="katakana" class="middle-name">ミドルネーム:</label>
+    <input type="text" id="katakana" name="katakana" value="<%= @katakana %>" readonly><br><br>
+
+    <label for="kanji2" class="name">名前:</label>
+    <input type="text" id="kanji2" name="kanji2" value="<%= @kanji2 %>" readonly><br><br>
+
+    <button type="submit" class="generate">生成</button>
+  </form>
+</body>
+</html>
