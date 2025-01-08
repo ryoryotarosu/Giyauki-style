@@ -1,25 +1,7 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+ギヤウキ風名前メーカー
 
-Things you may want to cover:
+漢字➕カタカナ➕漢字の組み合わせの名前を勝手に出力してくれる名前メーカー
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
-# -
+妄想のキャラクターやゲームのキャラクターに名前をつけるときに、便利かも
