@@ -5,8 +5,6 @@ class HomeController < ApplicationController
     @kanji2 = generate_kanji
   end
 
-  #なんかプッシュできない
-
   private
 
   def generate_kanji
