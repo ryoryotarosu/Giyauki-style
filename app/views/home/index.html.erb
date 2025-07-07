@@ -3,25 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ミドルネームメーカー</title>
+  <title>名付けメーカー</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 20px;
+    }
+    .tabs {
+      display: flex;
+      cursor: pointer;
+      margin-bottom: 1rem;
+    }
+    .tab {
+      padding: 10px 20px;
+      background: #eee;
+      margin-right: 5px;
+      border-radius: 5px 5px 0 0;
+    }
+    .tab.active {
+      background: #ccc;
+      font-weight: bold;
+    }
+    .tab-content {
+      display: none;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-top: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
+    input[readonly] {
+      background-color: #f4f4f4;
+      border: 1px solid #ccc;
+    }
+  </style>
 </head>
 <body>
-<div class="title">
-  <h1>ミドルネームメーカー</h1>
-</div>
+  <div class="title">
+    <h1>名付けメーカー</h1>
+  </div>
 
-<h2>ゲームや小説などで名付けに困っている際にご使用ください！</h2>
-  <form>
-    <label for="kanji" class="myouji">苗字:</label>
-    <input type="text" id="kanji" name="kanji" value="<%= @kanji %>" readonly><br><br>
+  <h2>ゲームや小説などで名付けに困っている際にご使用ください！</h2>
 
-    <label for="katakana" class="middle-name">ミドルネーム:</label>
-    <input type="text" id="katakana" name="katakana" value="<%= @katakana %>" readonly><br><br>
+  <!-- タブメニュー -->
+  <div class="tabs">
+    <div class="tab active" data-tab="tab-japanese">日本人風</div>
+    <div class="tab" data-tab="tab-mixed">ミックス</div>
+    <div class="tab" data-tab="tab-foreign">外国人風</div>
+  </div>
 
-    <label for="kanji2" class="name">名前:</label>
-    <input type="text" id="kanji2" name="kanji2" value="<%= @kanji2 %>" readonly><br><br>
+  <!-- 日本人風 -->
+  <div class="tab-content active" id="tab-japanese">
+    <form>
+      <label for="japanese_surname">苗字:</label>
+      <input type="text" id="japanese_surname" name="kanji" value="<%= @kanji %>" readonly><br><br>
 
-    <button type="submit" class="generate">生成</button>
-  </form>
+      <label for="japanese_givenname">名前:</label>
+      <input type="text" id="japanese_givenname" name="kanji2" value="<%= @kanji2 %>" readonly><br><br>
+
+      <button type="button" class="generate">生成</button>
+    </form>
+  </div>
+
+  <!-- ミックス -->
+  <div class="tab-content" id="tab-mixed">
+    <form>
+      <label for="mixed_kanji">苗字:</label>
+      <input type="text" id="mixed_kanji" name="kanji" value="<%= @kanji %>" readonly><br><br>
+
+      <label for="mixed_middle">ミドルネーム:</label>
+      <input type="text" id="mixed_middle" name="katakana" value="<%= @katakana %>" readonly><br><br>
+
+      <label for="mixed_given">名前:</label>
+      <input type="text" id="mixed_given" name="kanji2" value="<%= @kanji2 %>" readonly><br><br>
+
+      <button type="button" class="generate">生成</button>
+    </form>
+  </div>
+
+  <!-- 外国人風 -->
+  <div class="tab-content" id="tab-foreign">
+    <form>
+      <label for="foreign_first">ファーストネーム:</label>
+      <input type="text" id="foreign_first" name="katakana1" value="<%= @katakana1 %>" readonly><br><br>
+
+      <label for="foreign_middle">ミドルネーム:</label>
+      <input type="text" id="foreign_middle" name="katakana2" value="<%= @katakana2 %>" readonly><br><br>
+
+      <label for="foreign_last">ラストネーム:</label>
+      <input type="text" id="foreign_last" name="katakana3" value="<%= @katakana3 %>" readonly><br><br>
+
+      <button type="button" class="generate">生成</button>
+    </form>
+  </div>
+
+  <!-- タブ切り替えスクリプト -->
+  <!-- タブ切り替えスクリプト -->
+<script>
+  // タブ処理（前の回答と同じ）
+  const tabs = document.querySelectorAll('.tab');
+  const contents = document.querySelectorAll('.tab-content');
+
+  const savedTabId = localStorage.getItem('selectedTabId');
+
+  if (savedTabId) {
+    tabs.forEach(t => t.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+
+    const activeTab = document.querySelector(`.tab[data-tab="${savedTabId}"]`);
+    const activeContent = document.getElementById(savedTabId);
+
+    if (activeTab && activeContent) {
+      activeTab.classList.add('active');
+      activeContent.classList.add('active');
+    }
+  }
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const tabId = tab.dataset.tab;
+      tabs.forEach(t => t.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+
+      tab.classList.add('active');
+      document.getElementById(tabId).classList.add('active');
+
+      localStorage.setItem('selectedTabId', tabId);
+    });
+  });
+
+   // 🔁 すべての生成ボタンにイベントを設定（複数あるのでquerySelectorAll）
+  document.querySelectorAll('.generate').forEach(btn => {
+    btn.addEventListener('click', () => {
+      location.reload();
+    });
+  });
+</script>
 </body>
 </html>

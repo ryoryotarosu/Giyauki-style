@@ -1,8 +1,11 @@
 class HomeController < ApplicationController
   def index
     @kanji = generate_kanji
-    @katakana = generate_katakana
     @kanji2 = generate_kanji
+    @katakana = generate_katakana
+    @katakana1 = generate_katakana
+    @katakana2 = generate_katakana
+    @katakana3 = generate_katakana
   end
 
   private
@@ -212,7 +215,10 @@ class HomeController < ApplicationController
   end
 
   def generate_katakana
-    # カタカナをランダムに生成
+    # 先頭に使いたくない文字
+    invalid_first_chars = ['ヲ', 'ン', 'ー']
+  
+    # カタカナリスト（すべて）
     katakana_list = ['ア', 'イ', 'ウ', 'エ', 'オ', 'カ', 'キ', 'ク', 'ケ', 'コ',
                      'サ', 'シ', 'ス', 'セ', 'ソ', 'タ', 'チ', 'ツ', 'テ', 'ト',
                      'ナ', 'ニ', 'ヌ', 'ネ', 'ノ', 'ハ', 'ヒ', 'フ', 'ヘ', 'ホ',
@@ -225,7 +231,18 @@ class HomeController < ApplicationController
                      'ビャ', 'ビュ', 'ビョ', 'ピャ', 'ピュ', 'ピョ', 'ニャ', 'ニュ', 'ニョ',
                      'ヒャ', 'ヒュ', 'ヒョ', 'チャ', 'チュ', 'チョ', 'シャ', 'シュ', 'ショ',
                      'ジャ', 'ジュ', 'ジョ', 'キャ', 'キュ', 'キョ', 'ギャ', 'ギュ', 'ギョ']
-    random_count = rand(4..6)
-    katakana_list.sample(random_count).join
+  
+    # 最初の文字は、先頭禁止文字を除いたリストから
+    first_chars = katakana_list - invalid_first_chars
+  
+    random_count = rand(1..7)
+  
+    # 1文字だけの場合
+    return first_chars.sample if random_count == 1
+  
+    # 2文字以上の場合
+    first_char = first_chars.sample
+    remaining_chars = katakana_list.sample(random_count - 1)
+    ([first_char] + remaining_chars).join
   end
 end
